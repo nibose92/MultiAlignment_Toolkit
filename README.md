@@ -1,7 +1,7 @@
 <br>
 
 # Multiple Sequence Alignment Toolkit for Python or R: MUSCLE, Consensus, and Relative Entropy
-Tools to perform MUSCLE alignment (in fasta format), generate consensus (in fasta and csv format), and an updated version of Relative Entropy Estimation. These tools work for DNA, RNA, and Protein sequences. Aside from the Relative Entropy tool which is only currently only available for Python, all other tools are available in Python and R.
+Tools to perform MUSCLE alignment (in fasta format), generate consensus (in fasta and csv format), and an updated version of Relative Entropy Estimation. These tools work for DNA, RNA, and Protein sequences. Aside from the Relative Entropy tool which is currently only available for Python, all other tools are available in Python and R.
 <br>
 <br>
 **Author:** Nikhil Bose, Ph.D.\
