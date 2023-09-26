@@ -11,14 +11,14 @@ Tools to perform MUSCLE alignment (in fasta format), generate consensus (in fast
 <br>
 
 # Table of Contents:
-1) [General Description](#general-description)
-2) [Requirements](#requirements)
-3) [Installation](#installation)
-4) [Usage (Python Version)](#usage-python-version)
-5) [Usage (R Version)](#usage-r-version) 
-6) [Relative Entropy Tool Explanation](#relative-entropy-tool-explanation)
-7) [Credit Attribution](#credit-attribution)
-8) [License](#license)
+1) [General Description](#1-general-description)
+2) [Requirements](#2-requirements)
+3) [Installation](#3-installation)
+4) [Usage (Python Version)](#4-usage-python-version)
+5) [Usage (R Version)](#5-usage-r-version) 
+6) [Relative Entropy Tool Explanation](#6-relative-entropy-tool-explanation)
+7) [Credit Attribution](#7-credit-attribution)
+8) [License](#8-license)
 
 <br>
 <br>
