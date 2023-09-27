@@ -251,8 +251,8 @@ c) high *D<sub>KL* and high *cD<sub>KL*: a small set of individuals in the popul
 **Output files:** \
 a) a .csv file showing relative entropy (*D<sub>KL*) of each individual in the population at each position. \
 b) a .png file showing the maximum *D<sub>KL* value (in red) at each position (which helps identify informative individual-specific mutations) and *cD<sub>KL* (which helps identify informative population-level mutations). \
-c) a .csv file showing the values of *D<sub>KL* that can be expected from a single position mutation for 0 to all individuals of the population and in 0 to all alleles. \
-d) a .csv file showing the values of *cD<sub>KL* that can be expected from a single position mutation for 0 to all individuals of the population and in 0 to all alleles.
+c) a .csv file showing theoretical values of *D<sub>KL* that can be expected from a single position mutation for 0 to all individuals of your population and in 0 to all alleles. \
+d) a .csv file showing theoretical values of *cD<sub>KL* that can be expected from a single position mutation for 0 to all individuals of your population and in 0 to all alleles.
 
 The values for *D<sub>KL* and *cD<sub>KL* are unbounded (no predefined maximum and nor minimum, although 0 or negative value would imply uninformative). Also, the values generated cannot be normalized because different genes occur in different copy numbers. Therefore, the values completely depend on the copy numbers and individuals in each population set (the larger the population, the larger the *D<sub>KL* and *cD<sub>KL* values).
 
