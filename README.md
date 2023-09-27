@@ -179,8 +179,9 @@ Takes user input .fasta file of UNALIGNED sequences, performs MUSCLE alignment, 
 
 **Step 4:** Run code
 > "Completed MUSCLE Alignment!"
+
 <br>
-<br>
+
 ### b) Consensus:
 Takes user input .fasta file of ALIGNED sequences and generates a consensus.fasta file, a consensus.csv file, and a consensus residue frequency bar plot image as .png.\
 **Step 1:** Make sure the required packages are installed in Rstudio \
