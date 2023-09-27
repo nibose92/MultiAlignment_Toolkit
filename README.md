@@ -25,7 +25,7 @@ The tools are not to help Bioinformaticians with multi-alignment analyses, but a
 <br>
 
 ## 1) General Description
-The tools provided perform various functions with multiple sequence alignments.
+The tools provided perform various functions with multiple sequence alignments. Annotations within the codes are extensive, so those who are learning to use Biopython and R may view the codes and understand what happens at each step of the process.
 
 ### a) Muscle alignment (Python or R):
 Takes a multiple sequence file in .fasta format, performs multiple sequence alignment using R or Biopython according to R. Edgar's algorithm, and gives the output in .fasta format.
@@ -201,17 +201,19 @@ Takes user input .fasta file of ALIGNED sequences and generates a consensus.fast
 
 ## 6) Relative Entropy Tool Explanation
 
-This tool is an application of Kullback-Leibler Divergence (*D<sub>KL*) (https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) to provide values at nucleotide positions of your sequences of interest where a rare residue variations in DNA/RNA/peptide sequences reside for an individual relative to that of the population under study. The tool is even more informative if individuals in the population have multiple copies of the gene. Therefore, if the individual has a mutation in a specific position of the sequence among most or all copies of the gene, which no or few other individuals have, then they have evolved signficantly - the same residue changed in genomic copies located at different spots in the genome. This would not be evident from a cursory view of the consensus residue frequency of the population. The reason I wrote this code was to identify rare residue variations that occured across 16 gene copies in a strain or species, relative to a genus (or higher taxonomies). I identified that while 16S gene sequences in strains of the genera *Escherichia* and *Shigella* are over 99% identical, *Shigella dysenteriae*, *Shigella boydii*, and *Escherichia albertii* (pathogenic bacteria) had respective mutations that distinguished them from any other species in the genera (I looked at over 12,000 *Escherichia* and *Shigella* sequences across over 1800 strains). This can be helpful, because typical 16S gene analysis rarely provides species-level identification, especially for Escherichia and Shigella which are typically clumped under a single genus classification. By using the Relative Entropy tool, I compared the nucleotide-to-nucleotide differences in the genes, identified rare strain- and species-specific mutations, and then traced which strains or species they belong to.
+This tool is an application of Kullback-Leibler Divergence (*D<sub>KL*) (https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) to provide entropy values at residue positions of your sequences. Specifically, if a rare residue variation in DNA/RNA/peptide sequences reside for an individual relative to all individuals of the population under study, then a high entropy value is returned. The tool is even more informative if individuals in the population have multiple copies of the gene. Biologically, if the individual has a mutation in a specific position of a sequence across most or all copies of the gene, which no or few other individuals have, then they have evolved signficantly - the same residue changed in genomic copies located at different spots in the genome. This would not be evident from a cursory view of the consensus residue frequency of the population. The reason I wrote this code was to identify rare residue variations that occured across 16 gene copies in a strain or species, relative to a genus (or higher taxonomies). I identified that while 16S gene sequences in strains of the genera *Escherichia* and *Shigella* are over 99% identical, *Shigella dysenteriae*, *Shigella boydii*, and *Escherichia albertii* (pathogenic bacteria) had respective mutations that distinguished them from any other species in the genera (I looked at over 12,000 *Escherichia* and *Shigella* sequences across over 1800 strains). This can be helpful, because typical 16S gene analysis rarely provides species-level identification, especially for Escherichia and Shigella which are typically clumped under a single genus classification. By using the Relative Entropy tool, I compared the nucleotide-to-nucleotide differences in the genes, identified rare strain- and species-specific mutations, and then traced which strains or species they belong to.
 
 
 The way it works is that it takes a .fasta file containing a multiple alignment of the sequences of interest of a population, separates the sequences belonging to each individual and does a alignment position comparison of the frequency of a residue within the individual relative to the entire population. The formula is:
 
 *D<sub>KL* =  (*Pi * log(Pi/ Qi)*), where
 
-*Pi* = the residue frequency at a position of the gene within the organism or strain (a fraction that gives a decimal value from 0-1; for Escherichia and Shigella 16S genes, they ranged from 1/7 to 7/7) \
-*Qi* = the residue frequency at a position of the gene across organisms or strains (a fraction that gives a decimal value from 0-1; for Escherichia and Shigella 16S genes, they ranged from ~1/12000 to ~12000/12000)\
+*Pi* = the residue frequency at a position of the sequence within the organism or strain (a fraction that gives a decimal value from 0-1; for Escherichia and Shigella 16S genes, they ranged from 1/7 to 7/7) \
+*Qi* = the residue frequency at a position of the sequence across organisms or strains (a fraction that gives a decimal value from 0-1; for Escherichia and Shigella 16S genes, they ranged from ~1/12000 to ~12000/12000)\
 Log is to base 10 \
-*summation* implies that *Pi * log(Pi/Qi)* is summed across all observed residues at the position. So if the sequence type is DNA, *Pi * log(Pi/Qi)* at a position is calculated for 'A', 'C', 'G', 'T', and gap ('-') occurrences and summed up.
+*summation* implies that *Pi * log(Pi/Qi)* is summed across all observed residues at the position. So if the sequence type is DNA, *Pi * log(Pi/Qi)* at a position is calculated for 'A', 'C', 'G', 'T', and gap ('-') occurrences and summed up to give the overall entropy of that position for that individual. 
+
+The same process is carried out at all positions and for all individuals in the population.
 
 <br>
 
@@ -237,9 +239,22 @@ Log is to base 10 \
 **The second term is set to 0 because logically it is pointless to compute entropy for another residue in the organism when it is known to be absent (https://dsp.stackexchange.com/questions/74057/value-of-0-log0-in-entropy-formula).
 
 
-Cumulative relative entropy (*cD<sub>KL*) = summation(*D<sub>KL*) at a position across all organisms/strains in the population. So if a residue change is present across multiple individuals, it becomes more informative in the population level (whether the population is all strains in a species or genus). HOWEVER, NOTE that the more inviduals with the position-specific residue variation, the lower the individual *Dkl* (becomes less individual-specific).
+Cumulative relative entropy (*cD<sub>KL*) = summation(*D<sub>KL*) at a position across all organisms/strains in the population. So if a residue change is present across multiple individuals, *cD<sub>KL* is higher, which implies that mutation at that position is identity-informative for several members in the population level. In simple terms, higher the *D<sub>KL* value, then greater the stray of an individual from the population consensus. Higher the *cD<sub>KL* value, then greater the stray of multiple individuals from the population consensus. HOWEVER, NOTE that the more inviduals with the position-specific residue variation, the lower the individual *D<sub>KL* (becomes less individual-specific).
 
-The values for *Dkl* and *cDkl* are unbounded (no max and no min, though 0 or negative value would imply uninformative). Also, the values generated cannot generally be normalized because different genes occur in different copy numbers. Therefore, the values completely depend on the number of copy numbers and individuals in each population set (the larger the population, the larger the *D<sub>KL* and *cD<sub>KL* value).
+**The potential informative outcomes at a position are:** \
+a) high *D<sub>KL* and low *cD<sub>KL*: an individual in the population has a mutation in most, if not all alleles, which is absent in others. \
+b) low-medium *D<sub>KL* and high *cD<sub>KL*: several individuals in the population have a mutation in several alleles. \
+c) high *D<sub>KL* and high *cD<sub>KL*: a small set of individuals in the population have a mutation in most, if not all alleles.
+
+<br>
+
+**Output files:** \
+a) a .csv file showing relative entropy (*D<sub>KL*) of each individual in the population at each position. \
+b) a .png file showing the maximum *D<sub>KL* value (in red) at each position (which helps identify informative individual-specific mutations) and *cD<sub>KL* (which helps identify informative population-level mutations). \
+c) a .csv file showing the values of *D<sub>KL* that can be expected from a single position mutation for 0 to all individuals of the population and in 0 to all alleles. \
+d) a .csv file showing the values of *cD<sub>KL* that can be expected from a single position mutation for 0 to all individuals of the population and in 0 to all alleles.
+
+The values for *D<sub>KL* and *cD<sub>KL* are unbounded (no predefined maximum and nor minimum, although 0 or negative value would imply uninformative). Also, the values generated cannot be normalized because different genes occur in different copy numbers. Therefore, the values completely depend on the copy numbers and individuals in each population set (the larger the population, the larger the *D<sub>KL* and *cD<sub>KL* values).
 
 To add importance to values, the Relative Entropy code also generates .csv files showing theoretical *D<sub>KL* and *cD<sub>KL* values for your population set. These files show putative values for a residue mutation in 0-n gene copies for 0-N individuals, where n is the average number of gene copies per individual in your population (rounded to an integer) and N is the total number of individuals in your population. From the observed values for Relative Entropy (either from the .csv or .png file), compare with those of the theoretical values, which will tell you the approximate range of individuals and their gene copies (alleles) with mutations.
 
