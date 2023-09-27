@@ -223,7 +223,7 @@ Log is to base 10 \
 
 *D<sub>KL* at the position = (1/10 * log((1/10)/(1/1000))) + (9/10 * log((9/10)/(999/1000))) \
 = 0.2 + (-0.0407) \
-= 0.159 &ensp;&ensp;&ensp;&ensp; <- Low value, hence less informative for organism identification
+= 0.159 &ensp;&ensp;&ensp;&ensp; <- Lower value, hence less informative for organism identification
 
 **Case 2:** One individual has a residue change in all gene copies that no other individual in the population has. All others in the population have identical gene sequences. \
 *Pi* = 10/10 for mutated residue, and 0/10 for the unmutated residue \
@@ -232,7 +232,7 @@ Log is to base 10 \
 *D<sub>KL* at the position = (10/10 * log((10/10)/(10/1000))) + (0/10 * log((0/10)/(990/1000)))\
 = 2 + (0)**
 <br>
-= 2 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<- Higher value, hence more informative for organism identification\
+= 2 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<- Higher value, hence more informative for organism identification
 
 **The second term is set to 0 because logically it is pointless to compute entropy for another residue in the organism when it is known to be absent (https://dsp.stackexchange.com/questions/74057/value-of-0-log0-in-entropy-formula).
 
